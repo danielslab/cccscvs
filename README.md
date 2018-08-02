@@ -1,59 +1,58 @@
 # ccss
 
-[![Build Status](https://img.shields.io/github/stars/fuckcqcs/fuckcqcs.svg)](https://github.com/fuckcqcs/fuckcqcs)
-[![Build Status](https://img.shields.io/github/forks/fuckcqcs/fuckcqcs.svg)](https://github.com/fuckcqcs/fuckcqcs)
-[![Build Status](https://img.shields.io/badge/README-English-yellow.svg)](README_EN.md)
+长春长生疫苗数据可视化（并非完全数据）
+import pandas as pd
+import numpy as np
+import matplotlib as mpl
+import seaborn as sns
+import os
+% matplotlib inline
+mpl.rcParams['font.sans-serif'] = ['simhei']
+mpl.rcParams['font.serif'] = ['simhei']
+sns.set_style('darkgrid', {'font.sans-serif':['simhei','mono']})
+与此次事件有关的省份
+df = pd.DataFrame()
+for filename in os.listdir('csv'):
+    tmp_df = pd.read_csv('csv/{}'.format(filename))
+    df = df.append(tmp_df)
+ax = df.groupby('prov').count()['name'].sort_values().plot.barh(figsize=(14,8), fontsize=16)
+ax.set_title("波及省份及疫苗批次", fontsize=24)
+ax.set_xlabel("批次", fontsize=18)
+ax.set_ylabel("省份", fontsize=18);
+png
+-
+df.groupby(['name']).size().count()
+209
+2016年到2018年共有209种疫苗销往各个省市。
 
-## 前言
-本文首发于个人的公众号和v2ex，事先也没想到会有这么多人关注。
+ax = df.groupby(['name']).size().sort_values(ascending=False)[20:0:-1].plot.barh(figsize=(14,10), fontsize=16)
+ax.set_title('输出批次前20的疫苗', fontsize=24)
+ax.set_xlabel('疫苗输出批次',fontsize=18)
+ax.set_ylabel('疫苗名称', fontsize=18);
+png
 
-由于本人文案水平不高，原先文中对此次疫苗事件背景的描述并不严谨的措辞。
+ax = df.groupby(['name']).size().sort_values(ascending=False)[40:0:-1].plot.barh(figsize=(14,20), fontsize=16)
+ax.set_title('输出批次前40的疫苗', fontsize=24)
+ax.set_xlabel('疫苗输出批次',fontsize=18)
+ax.set_ylabel('疫苗名称', fontsize=18);
+png
+-
+ax = df.groupby(['src']).size().plot.pie(figsize=(10,10), fontsize=16, autopct='%.2f%%')
+ax.set_title('国产疫苗与进口疫苗占比情况', fontsize=24);
+png
+-
+ax = df.groupby(['year']).size().plot.pie(figsize=(10,10), fontsize=16, autopct='%.2f%%')
+ax.set_title('国产疫苗与进口疫苗占比情况', fontsize=24);
+png
+-
+ax=df[df['year']==2016].groupby(['prov'], as_index=False).size().plot.pie(autopct='%.2f%%', figsize=(12,12), fontsize=18)
+ax.set_title('2016年疫苗输出方向及各省份所占比例', fontsize=24);
+png
+-
+ax = df[df['year']==2017].groupby(['prov'], as_index=False).size().plot.pie(autopct='%.2f%%', figsize=(12,12), fontsize=18)
+ax.set_title('2017年疫苗输出方向及各省份所占比例', fontsize=24);
+png
+-
+ax = df[df['year']==2018].groupby(['prov'], as_index=False).size().plot.pie(autopct='%.2f%%', figsize=(12,12), fontsize=18)
+ax.set_title('2018年疫苗输出方向及各省份所占比例', fontsize=24);
 
-v2ex账号因为没验证手机，也登陆不上了。所以后续更新基本会在github。
-
-本文观点从技术讨论出发，尽量客观中立。
-
-## 郑重声明 
-
-- 数据年份是2016至2018年间的数据，
-    - 每个省份一个数据，仅以能找到的最新的数据为主
-    - 不考虑增补数据（每年第一批疫苗集中采购后，后续会根据政策再开第二批，第三批等等）
-- 本文主要讨论的观点
-
-    - **并不是本次新闻里的问题疫苗数据**
-    - **并不是本次新闻里的问题疫苗数据**
-    - **并不是本次新闻里的问题疫苗数据**
-    
-    本文讨论的观点是
-    - 此次问题疫苗事件相关企业的各类疫苗在各省份的销售情况
-    - 由于年度跨度长（2016-2018）所以批次范围不考虑数据批次
-
-## 数据整理情况
-除港澳台，其他省份均以收录
-
-
-
-## 常见的Q&A
-
-- 有没有打赏的渠道？
-    -  这不是生意，不需要打赏（我怕控制不住我自己）
-    -  后续很多其他的数据都是其他网友提供，我只是修修补补
-    -  平时挺忙的，也就是下班才能进行修改
-    -  所以一般晚上才进行回复
-
-- 出于什么目的做了这个 
-    - 程序员的思路，看到一个企业的疫苗不合格，自然会想到它其他的疫苗情况
-    - 但是去它官网看的时候，官网也挂了，只能手动进行搜索
-    - 然后把搜索的关键字记录了下来，方便以后重新搜索
-
-- 用爬虫去爬的数据吗？
-    - 不是！我是手工去搜索的，把数据另存为然后用脚本处理了以下
-    - 所有的数据基本都是政府公示的信息中获取     
-
-- 为啥查不到批次
-    - 此次问题疫苗事件相关企业的各类疫苗在各省份的销售情况
-    - 由于年度跨度长（2016-2018）所以批次范围不考虑数据批次
-
-- 长春长生不是cccs吗？cqcs是啥意思？
-    - 我广东的，普通话不太准
-# 致谢列表
