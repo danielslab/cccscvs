@@ -83,8 +83,6 @@ ax.set_title('国产疫苗与进口疫苗占比情况', fontsize=24);
 ```
 
 
-![png](output_10_0.png)
-
 
 
 ```python
